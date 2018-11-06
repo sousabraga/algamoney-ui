@@ -11,7 +11,7 @@ export class LancamentosPesquisaComponent  {
     {
       tipo: 'DESPESA',
       descricao: 'Compra de pão',
-      dataVencimento: '30/12/2018',
+      dataVencimento: new Date('2018/12/30'),
       dataPagamento: null,
       valor: 4.55,
       pessoa: 'Padaria do José'
@@ -19,7 +19,7 @@ export class LancamentosPesquisaComponent  {
     {
       tipo: 'RECEITA',
       descricao: 'Venda de Software',
-      dataVencimento: '25/12/2018',
+      dataVencimento: new Date('2018/12/25'),
       dataPagamento: null,
       valor: 80000,
       pessoa: 'Atacado Brasil'
@@ -27,7 +27,7 @@ export class LancamentosPesquisaComponent  {
     {
       tipo: 'RECEITA',
       descricao: 'Venda de Carro',
-      dataVencimento: '10/12/2018',
+      dataVencimento: new Date('2018/12/10'),
       dataPagamento: null,
       valor: 50000,
       pessoa: 'Sebastião Sousa'
