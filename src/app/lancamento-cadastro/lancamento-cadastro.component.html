@@ -1,0 +1,65 @@
+<div class="container">
+
+  <form>
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Novo Lançamento</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <p-selectButton [options]="tipos" #tipoSelecionado></p-selectButton>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label for="data-vencimento">Vencimento</label>
+        <p-calendar id="data-vencimento" dateFormat="dd/mm/yy"
+          [readonlyInput]="true" [showIcon]="true"></p-calendar>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label for="data-pagamento">
+          {{tipoSelecionado.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}
+        </label>
+        <p-calendar id="data-pagamento" dateFormat="dd/mm/yy"
+          [readonlyInput]="true" [showIcon]="true"></p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label for="descricao">Descrição</label>
+        <input pInputText type="text" id="descricao">
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label for="valor">Valor</label>
+        <input pInputText type="text" id="valor" placeholder="0,00" currencyMask
+          [options]="{prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false}">
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label for="categoria">Categoria</label>
+        <p-dropdown id="categoria" placeholder="Selecione"
+          [autoWidth]="false" [options]="categorias"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label for="pessoa">Pessoa</label>
+        <p-dropdown id="pessoa" placeholder="Selecione"
+          [autoWidth]="false" [options]="pessoas" [filter]="true"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label for="observacao">Observação</label>
+        <textarea pInputTextarea id="observacao" rows="3"></textarea>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="button" label="Salvar"></button>
+        &nbsp;
+        <button pButton type="button" label="Novo" class="ui-button-info"></button>
+        &nbsp;
+        <a href="#">Voltar para a pesquisa</a>
+      </div>
+    </div>
+  </form>
+
+</div>
