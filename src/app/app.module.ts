@@ -10,8 +10,9 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
 
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 import { AppComponent } from './app.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
@@ -40,7 +41,8 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
     TooltipModule,
     SelectButtonModule,
     DropdownModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    InputMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
