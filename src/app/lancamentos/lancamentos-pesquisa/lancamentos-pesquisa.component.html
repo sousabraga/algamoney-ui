@@ -8,7 +8,7 @@
 
       <div class="ui-g-12 ui-fluid">
         <label for="descricao">Descrição</label>
-        <input pInputText type="text" id="descricao" name="descricao" [(ngModel)]="descricao">
+        <input pInputText type="text" id="descricao" name="descricao" [(ngModel)]="filtro.descricao">
       </div>
 
       <div class="ui-g-12">
@@ -16,12 +16,14 @@
 
         <p-calendar id="data-vencimento-inicio" name="data-vencimento-inicio"
           dateFormat="dd/mm/yy" [readonlyInput]="true" [showIcon]="true"
-          [(ngModel)]="dataVencimentoInicio">
+          [(ngModel)]="filtro.dataVencimentoInicio">
         </p-calendar>
+
         <label class="label-ate">até</label>
+
         <p-calendar id="data-vencimento-fim" name="data-vencimento-fim"
           dateFormat="dd/mm/yy" [readonlyInput]="true" [showIcon]="true"
-          [(ngModel)]="dataVencimentoFim">
+          [(ngModel)]="filtro.dataVencimentoFim">
         </p-calendar>
       </div>
 
@@ -31,7 +33,45 @@
     </form>
 
     <div class="ui-g-12">
-      <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
+      <p-table [value]="lancamentos" [responsive]="true"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
+        [lazy]="true" [totalRecords]="totalRegistros"
+        [loading]="loading" (onLazyLoad)="aoMudarPagina($event)">
+
+        <ng-template pTemplate="header">
+            <tr>
+              <th>Tipo</th>
+              <th>Descrição</th>
+              <th>Vencimento</th>
+              <th>Pagamento</th>
+              <th>Valor</th>
+              <th>Pessoa</th>
+              <th>Ações</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-lancamento>
+          <tr>
+            <td>{{lancamento.tipo}}</td>
+            <td>{{lancamento.descricao}}</td>
+            <td>{{lancamento.dataVencimento | date:'dd/MM/yyyy'}}</td>
+            <td>{{lancamento.dataPagamento | date:'dd/MM/yyyy'}}</td>
+            <td [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'green'">
+              {{lancamento.valor | currency}}
+            </td>
+            <td>{{lancamento.pessoa}}</td>
+            <td class="col-acoes">
+              <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></button>
+              &nbsp;
+              <button pButton type="button" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <b>Nenhum lançamento encontrado.</b>
+        </ng-template>
+      </p-table>
     </div>
 
     <div class="ui-g-12">
