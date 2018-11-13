@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
@@ -30,6 +31,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
     TooltipModule,
     SelectButtonModule,
     DropdownModule,
+    ToastModule,
     CurrencyMaskModule
   ],
   declarations: [

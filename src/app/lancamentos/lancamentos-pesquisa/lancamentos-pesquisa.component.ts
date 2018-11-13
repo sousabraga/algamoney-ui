@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent } from 'primeng/components/common/api';
+import { catchError } from 'rxjs/operators';
+
+import { LazyLoadEvent, MessageService } from 'primeng/components/common/api';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 
@@ -19,7 +21,11 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   @ViewChild('tabela') tabela;
 
-  constructor(private lancamentoService: LancamentoService) {}
+  private lancamentoParaExcluir: any;
+
+  constructor(
+    private lancamentoService: LancamentoService,
+    private messageService: MessageService) {}
 
   ngOnInit(): void {}
 
@@ -35,14 +41,36 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   excluir(lancamento: any) {
     this.lancamentoService.excluir(lancamento.id)
-      .subscribe(response => {
-        this.loading = true;
-
+      .toPromise()
+      .then(response => {
         this.pesquisar();
         this.tabela.first = 0;
 
-        this.loading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Lançamento excluído',
+          detail: 'Lançamento excluído com sucesso'
+        });
+      }).catch(error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro ao excluir',
+          detail: 'Ocorreu um erro ao tentar excluir o lançamento'
+        });
       });
+  }
+
+  confirmarExclusao(lancamento: any) {
+    this.lancamentoParaExcluir = lancamento;
+
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'c',
+      sticky: true,
+      severity: 'warn',
+      summary: 'Deseja excluir o lançamento?',
+      detail: 'Confirme para prosseguir'
+    });
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -52,6 +80,20 @@ export class LancamentosPesquisaComponent implements OnInit {
     this.pesquisar(pagina);
 
     this.loading = false;
+  }
+
+  onConfirm() {
+    console.log(`LAnçamento para excluir: ${JSON.stringify(this.lancamentoParaExcluir)}`);
+    this.messageService.clear('c');
+
+    if (this.lancamentoParaExcluir) {
+      this.excluir(this.lancamentoParaExcluir);
+      this.lancamentoParaExcluir = undefined;
+    }
+  }
+
+  onReject() {
+      this.messageService.clear('c');
   }
 
 }
