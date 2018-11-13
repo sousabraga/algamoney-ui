@@ -12,8 +12,8 @@ export class ErrorHandlerService {
   handle(errorResponse: any) {
     let mensagem: string;
 
-    if (typeof errorResponse === 'string') {
-      mensagem = errorResponse;
+    if (errorResponse.error[0].mensagemUsuario) {
+      mensagem = errorResponse.error[0].mensagemUsuario;
     } else {
       mensagem = 'Erro ao processar. Tente novamente.';
       console.log('Ocorreu um erro', errorResponse);
