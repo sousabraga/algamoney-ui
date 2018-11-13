@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { Observable } from 'rxjs/internal/Observable';
-
 import * as moment from 'moment';
 
 import { ALGAMONEY_API, ACCESS_TOKEN } from '../app.api';
@@ -14,7 +12,7 @@ export class LancamentoService {
 
   constructor(private http: HttpClient) {}
 
-  pesquisar(filtro: LancamentoFiltro): Observable<any> {
+  pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
 
     const options = {
@@ -25,10 +23,10 @@ export class LancamentoService {
       params: params
     };
 
-    return this.http.get(`${ALGAMONEY_API}/lancamentos?resumo`, options);
+    return this.http.get(`${ALGAMONEY_API}/lancamentos?resumo`, options).toPromise();
   }
 
-  excluir(id: number): Observable<any> {
+  excluir(id: number): Promise<any> {
     const options = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -36,7 +34,7 @@ export class LancamentoService {
       })
     };
 
-    return this.http.delete(`${ALGAMONEY_API}/lancamentos/${id}`, options);
+    return this.http.delete(`${ALGAMONEY_API}/lancamentos/${id}`, options).toPromise();
   }
 
   private popularFiltro(filtro: LancamentoFiltro): HttpParams {

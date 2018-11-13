@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, MessageService } from 'primeng/components/common/api';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
+import { ErrorHandlerService } from './../../core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -23,6 +24,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
+    private errorHandler: ErrorHandlerService,
     private messageService: MessageService) {}
 
   ngOnInit(): void {}
@@ -31,15 +33,15 @@ export class LancamentosPesquisaComponent implements OnInit {
     this.filtro.pagina = pagina;
 
     this.lancamentoService.pesquisar(this.filtro)
-      .subscribe(response => {
+      .then(response => {
         this.lancamentos = response.content;
         this.totalRegistros = response.totalElements;
-      });
+      })
+      .catch(error => this.errorHandler.handle(error));
   }
 
   excluir(lancamento: any) {
     this.lancamentoService.excluir(lancamento.id)
-      .toPromise()
       .then(() => {
         this.pesquisar();
         this.tabela.first = 0;
@@ -49,13 +51,8 @@ export class LancamentosPesquisaComponent implements OnInit {
           summary: 'Lançamento excluído',
           detail: 'Lançamento excluído com sucesso'
         });
-      }).catch(() => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro ao excluir',
-          detail: 'Ocorreu um erro ao tentar excluir o lançamento'
-        });
-      });
+      })
+      .catch(error => this.errorHandler.handle(error));
   }
 
   confirmarExclusao(lancamento: any) {
@@ -81,7 +78,6 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   onConfirm() {
-    console.log(`LAnçamento para excluir: ${JSON.stringify(this.lancamentoParaExcluir)}`);
     this.messageService.clear('c');
 
     if (this.lancamentoParaExcluir) {
