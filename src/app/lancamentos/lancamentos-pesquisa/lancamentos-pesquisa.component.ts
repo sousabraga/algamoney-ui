@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { catchError } from 'rxjs/operators';
-
 import { LazyLoadEvent, MessageService } from 'primeng/components/common/api';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
@@ -42,7 +40,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   excluir(lancamento: any) {
     this.lancamentoService.excluir(lancamento.id)
       .toPromise()
-      .then(response => {
+      .then(() => {
         this.pesquisar();
         this.tabela.first = 0;
 
@@ -51,7 +49,7 @@ export class LancamentosPesquisaComponent implements OnInit {
           summary: 'Lançamento excluído',
           detail: 'Lançamento excluído com sucesso'
         });
-      }).catch(error => {
+      }).catch(() => {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro ao excluir',
