@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
@@ -17,6 +17,8 @@ export class LancamentosPesquisaComponent implements OnInit {
   totalRegistros = 0;
   loading = false;
 
+  @ViewChild('tabela') tabela;
+
   constructor(private lancamentoService: LancamentoService) {}
 
   ngOnInit(): void {}
@@ -28,6 +30,18 @@ export class LancamentosPesquisaComponent implements OnInit {
       .subscribe(response => {
         this.lancamentos = response.content;
         this.totalRegistros = response.totalElements;
+      });
+  }
+
+  excluir(lancamento: any) {
+    this.lancamentoService.excluir(lancamento.id)
+      .subscribe(response => {
+        this.loading = true;
+
+        this.pesquisar();
+        this.tabela.first = 0;
+
+        this.loading = false;
       });
   }
 

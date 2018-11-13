@@ -28,6 +28,17 @@ export class LancamentoService {
     return this.http.get(`${ALGAMONEY_API}/lancamentos?resumo`, options);
   }
 
+  excluir(id: number): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.delete(`${ALGAMONEY_API}/lancamentos/${id}`, options);
+  }
+
   private popularFiltro(filtro: LancamentoFiltro): HttpParams {
     let params = new HttpParams();
     params = params.append('page', filtro.pagina.toString());
