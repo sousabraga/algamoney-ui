@@ -58,7 +58,7 @@
             <td>{{lancamento.dataVencimento | date:'dd/MM/yyyy'}}</td>
             <td>{{lancamento.dataPagamento | date:'dd/MM/yyyy'}}</td>
             <td [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'green'">
-              {{lancamento.valor | currency}}
+              {{lancamento.valor | currency: 'BRL': 'symbol'}}
             </td>
             <td>{{lancamento.pessoa}}</td>
             <td class="col-acoes">
