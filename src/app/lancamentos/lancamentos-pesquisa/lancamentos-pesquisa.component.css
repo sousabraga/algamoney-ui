@@ -2,6 +2,11 @@
   display: block;
 }
 
+.label-ate {
+  margin-left: 50px;
+  margin-right: 20px;
+}
+
 .data-vencimento {
   width: 95px;
 }

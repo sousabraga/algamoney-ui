@@ -14,9 +14,15 @@
       <div class="ui-g-12">
         <label class="label-vencimento">Vencimento</label>
 
-        <input pInputText type="text" class="data-vencimento">
-        <label> até </label>
-        <input pInputText type="text" class="data-vencimento">
+        <p-calendar id="data-vencimento-inicio" name="data-vencimento-inicio"
+          dateFormat="dd/mm/yy" [readonlyInput]="true" [showIcon]="true"
+          [(ngModel)]="dataVencimentoInicio">
+        </p-calendar>
+        <label class="label-ate">até</label>
+        <p-calendar id="data-vencimento-fim" name="data-vencimento-fim"
+          dateFormat="dd/mm/yy" [readonlyInput]="true" [showIcon]="true"
+          [(ngModel)]="dataVencimentoFim">
+        </p-calendar>
       </div>
 
       <div class="ui-g-12">
