@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent } from 'primeng/components/common/api';
+import { LazyLoadEvent, MessageService } from 'primeng/components/common/api';
 
 import { PessoaService, PessoaFiltro } from './../pessoa.service';
+import { ErrorHandlerService } from './../../core/error-handler.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -17,7 +18,14 @@ export class PessoasPesquisaComponent implements OnInit {
   totalRegistros = 0;
   loading = false;
 
-  constructor(private pessoaService: PessoaService) {}
+  @ViewChild('tabela') tabela;
+
+  private pessoaParaExcluir: any;
+
+  constructor(
+    private pessoaService: PessoaService,
+    private errorHandlerService: ErrorHandlerService,
+    private messageService: MessageService) {}
 
   ngOnInit(): void {}
 
@@ -25,10 +33,39 @@ export class PessoasPesquisaComponent implements OnInit {
     this.filtro.pagina = pagina;
 
     this.pessoaService.pesquisar(this.filtro)
-      .subscribe(response => {
+      .then(response => {
         this.pessoas = response.content;
         this.totalRegistros = response.totalElements;
-      });
+      })
+      .catch(error => this.errorHandlerService.handle(error));
+  }
+
+  excluir(pessoa: any) {
+    this.pessoaService.excluir(pessoa.id)
+      .then(() => {
+        this.pesquisar();
+        this.tabela.first = 0;
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Pessoa excluída',
+          detail: 'Pessoa excluída com sucesso'
+        });
+      })
+      .catch(error => this.errorHandlerService.handle(error));
+  }
+
+  confirmarExclusao(pessoa: any) {
+    this.pessoaParaExcluir = pessoa;
+
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'confirm-dialog',
+      sticky: true,
+      severity: 'warn',
+      summary: 'Deseja excluir a pessoa?',
+      detail: 'Confirme para prosseguir'
+    });
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -38,6 +75,19 @@ export class PessoasPesquisaComponent implements OnInit {
     this.pesquisar(pagina);
 
     this.loading = false;
+  }
+
+  onConfirm() {
+    this.messageService.clear('confirm-dialog');
+
+    if (this.pessoaParaExcluir) {
+      this.excluir(this.pessoaParaExcluir);
+      this.pessoaParaExcluir = undefined;
+    }
+  }
+
+  onReject() {
+      this.messageService.clear('confirm-dialog');
   }
 
 }

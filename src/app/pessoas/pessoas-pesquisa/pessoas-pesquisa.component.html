@@ -20,7 +20,8 @@
       <p-table [value]="pessoas" [responsive]="true"
         [paginator]="true" [rows]="5"
         [lazy]="true" [totalRecords]="totalRegistros"
-        [loading]="loading" (onLazyLoad)="aoMudarPagina($event)">
+        [loading]="loading" (onLazyLoad)="aoMudarPagina($event)"
+        #tabela>
 
         <ng-template pTemplate="header">
           <tr>
@@ -46,7 +47,10 @@
             <td class="col-acoes">
               <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></button>
               &nbsp;
-              <button pButton type="button" icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton type="button" icon="pi pi-trash"
+                pTooltip="Excluir" tooltipPosition="top"
+                (click)="confirmarExclusao(pessoa)">
+              </button>
             </td>
           </tr>
         </ng-template>
@@ -63,3 +67,21 @@
 
   </div>
 </div>
+
+<p-toast position="center" key="confirm-dialog" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+      <div style="text-align: center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+        <h3>{{message.summary}}</h3>
+        <p>{{message.detail}}</p>
+      </div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-6">
+          <button type="button" pButton (click)="onConfirm()" label="Sim" class="ui-button-danger"></button>
+        </div>
+        <div class="ui-g-6">
+          <button type="button" pButton (click)="onReject()" label="Não" class="ui-button-secondary"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-toast>

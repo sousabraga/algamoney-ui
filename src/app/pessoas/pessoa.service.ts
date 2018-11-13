@@ -12,7 +12,7 @@ export class PessoaService {
 
   constructor(private http: HttpClient) {}
 
-  pesquisar(filtro: PessoaFiltro): Observable<any> {
+  pesquisar(filtro: PessoaFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
 
     const options = {
@@ -23,10 +23,10 @@ export class PessoaService {
       params: params
     };
 
-    return this.http.get(`${ALGAMONEY_API}/pessoas`, options);
+    return this.http.get(`${ALGAMONEY_API}/pessoas`, options).toPromise();
   }
 
-  listarTodas(): Observable<any> {
+  listarTodas(): Promise<any> {
     const options = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -34,7 +34,18 @@ export class PessoaService {
       })
     };
 
-    return this.http.get(`${ALGAMONEY_API}/pessoas`, options);
+    return this.http.get(`${ALGAMONEY_API}/pessoas`, options).toPromise();
+  }
+
+  excluir(id: number): Promise<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.delete(`${ALGAMONEY_API}/pessoas/${id}`, options).toPromise();
   }
 
   private popularFiltro(filtro: PessoaFiltro): HttpParams {

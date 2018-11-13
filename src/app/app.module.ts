@@ -29,6 +29,6 @@ registerLocaleData(localePt, 'pt');
     PessoasModule
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt'}, MessageService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

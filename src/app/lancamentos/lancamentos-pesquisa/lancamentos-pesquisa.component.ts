@@ -24,7 +24,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
-    private errorHandler: ErrorHandlerService,
+    private errorHandlerService: ErrorHandlerService,
     private messageService: MessageService) {}
 
   ngOnInit(): void {}
@@ -37,7 +37,7 @@ export class LancamentosPesquisaComponent implements OnInit {
         this.lancamentos = response.content;
         this.totalRegistros = response.totalElements;
       })
-      .catch(error => this.errorHandler.handle(error));
+      .catch(error => this.errorHandlerService.handle(error));
   }
 
   excluir(lancamento: any) {
@@ -52,7 +52,7 @@ export class LancamentosPesquisaComponent implements OnInit {
           detail: 'Lançamento excluído com sucesso'
         });
       })
-      .catch(error => this.errorHandler.handle(error));
+      .catch(error => this.errorHandlerService.handle(error));
   }
 
   confirmarExclusao(lancamento: any) {
@@ -60,7 +60,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
     this.messageService.clear();
     this.messageService.add({
-      key: 'c',
+      key: 'confirm-dialog',
       sticky: true,
       severity: 'warn',
       summary: 'Deseja excluir o lançamento?',
@@ -78,7 +78,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   onConfirm() {
-    this.messageService.clear('c');
+    this.messageService.clear('confirm-dialog');
 
     if (this.lancamentoParaExcluir) {
       this.excluir(this.lancamentoParaExcluir);
@@ -87,7 +87,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   onReject() {
-      this.messageService.clear('c');
+      this.messageService.clear('confirm-dialog');
   }
 
 }

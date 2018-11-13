@@ -7,6 +7,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { ToastModule } from 'primeng/toast';
 
 import { SharedModule } from './../shared/shared.module';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
@@ -21,7 +22,8 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
     InputMaskModule,
     InputTextModule,
     TableModule,
-    TooltipModule
+    TooltipModule,
+    ToastModule
   ],
   declarations: [
     PessoaCadastroComponent,
