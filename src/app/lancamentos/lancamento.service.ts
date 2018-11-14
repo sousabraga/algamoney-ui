@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import * as moment from 'moment';
 
+import { Lancamento } from './../core/model/lancamento.model';
 import { ALGAMONEY_API, ACCESS_TOKEN } from '../app.api';
 
 @Injectable({
@@ -11,6 +12,17 @@ import { ALGAMONEY_API, ACCESS_TOKEN } from '../app.api';
 export class LancamentoService {
 
   constructor(private http: HttpClient) {}
+
+  adicionar(lancamento: Lancamento): Promise<Lancamento> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.post<Lancamento>(`${ALGAMONEY_API}/lancamentos`, lancamento, options).toPromise();
+  }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
