@@ -68,6 +68,18 @@ export class PessoasPesquisaComponent implements OnInit {
     });
   }
 
+  alterarStatusPessoa(pessoa: any) {
+    this.pessoaService.alterarStatusPessoa(pessoa)
+      .then(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Status atualizado',
+          detail: 'Status atualizado com sucesso'
+        });
+      })
+      .catch(error => this.errorHandlerService.handle(error));
+  }
+
   aoMudarPagina(event: LazyLoadEvent) {
     this.loading = true;
     const pagina = event.first / event.rows;

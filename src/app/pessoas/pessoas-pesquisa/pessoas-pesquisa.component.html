@@ -18,7 +18,7 @@
 
     <div class="ui-g-12">
       <p-table [value]="pessoas" [responsive]="true"
-        [paginator]="true" [rows]="5"
+        [paginator]="true" [rows]="filtro.itensPorPagina"
         [lazy]="true" [totalRecords]="totalRegistros"
         [loading]="loading" (onLazyLoad)="aoMudarPagina($event)"
         #tabela>
@@ -39,7 +39,7 @@
             <td>{{pessoa.cidade}}</td>
             <td>{{pessoa.estado}}</td>
             <td>
-              <a class="status-toggle" href="#"
+              <a class="status-toggle" (click)="alterarStatusPessoa(pessoa)"
                 pTooltip="{{pessoa.ativo === true? 'Desativar' : 'Ativar'}}" tooltipPosition="top">
                 {{pessoa.ativo === true? 'Ativo' : 'Inativo'}}
               </a>

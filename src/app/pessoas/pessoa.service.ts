@@ -27,25 +27,23 @@ export class PessoaService {
   }
 
   listarTodas(): Promise<any> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
+    const options = this.getHeaderOptions();
 
     return this.http.get(`${ALGAMONEY_API}/pessoas`, options).toPromise();
   }
 
   excluir(id: number): Promise<any> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
+    const options = this.getHeaderOptions();
 
     return this.http.delete(`${ALGAMONEY_API}/pessoas/${id}`, options).toPromise();
+  }
+
+  alterarStatusPessoa(pessoa: any): Promise<any> {
+    pessoa.ativo = !pessoa.ativo;
+
+    const options = this.getHeaderOptions();
+
+    return this.http.put(`${ALGAMONEY_API}/pessoas/${pessoa.id}/ativo`, pessoa.ativo, options).toPromise();
   }
 
   private popularFiltro(filtro: PessoaFiltro): HttpParams {
@@ -58,6 +56,18 @@ export class PessoaService {
     }
 
     return params;
+  }
+
+  // Depois este método será removido quando for utilizar OAuth e JWT
+  private getHeaderOptions(): any {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return options;
   }
 
 }
