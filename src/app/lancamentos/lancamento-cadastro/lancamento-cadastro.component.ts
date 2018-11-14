@@ -33,7 +33,7 @@ export class LancamentoCadastroComponent implements OnInit {
   private carregarCategorias() {
     this.categoriaService.listarTodas()
       .then(response => {
-        this.categorias = response.map(c => ({label: c.nome, value: c.codigo}) );
+        this.categorias = response.map(c => ({label: c.nome, value: c.id}) );
       })
       .catch(error => this.errorHandlerService.handle(error));
   }
