@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-
 import { ALGAMONEY_API, ACCESS_TOKEN } from './../app.api';
 
 @Injectable({
