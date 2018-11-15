@@ -3,7 +3,7 @@
   <div class="container">
     <div class="ui-g">
       <div class="ui-g-12">
-        <a href="#" (click)="exibeMenu = !exibeMenu">
+        <a href="javascript:;" (click)="exibeMenu = !exibeMenu">
           <i class="pi pi-bars navbar-toggle"></i>
         </a>
       </div>
@@ -12,13 +12,13 @@
 
   <ul class="navbar-menu" [hidden]="!exibeMenu">
     <li class="navbar-usuario">Matheus Braga</li>
-    <li class="navbar-menuitem">
-      <a href="#">Lançamentos</a>
+    <li routerLinkActive="ativo" class="navbar-menuitem">
+      <a routerLink="/lancamentos">Lançamentos</a>
     </li>
-    <li class="navbar-menuitem">
-      <a href="#">Pessoas</a>
+    <li routerLinkActive="ativo" class="navbar-menuitem">
+      <a routerLink="/pessoas">Pessoas</a>
     </li>
-    <li class="navbar-menuitem">
+    <li routerLinkActive="ativo" class="navbar-menuitem">
       <a href="#">Logout</a>
     </li>
   </ul>

@@ -29,6 +29,15 @@ a:hover, a:focus {
   text-align: center;
 }
 
+.ui-button-link {
+  background-color: #007ad9 !important;
+  color: #fff!important;
+}
+
+.ui-button-link:hover {
+  background-color: #0061ad !important;
+  color: #fff !important;
+}
 
 
 
