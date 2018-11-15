@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ALGAMONEY_API, ACCESS_TOKEN } from './../app.api';
+import { Pessoa } from '../core/model/pessoa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,17 @@ import { ALGAMONEY_API, ACCESS_TOKEN } from './../app.api';
 export class PessoaService {
 
   constructor(private http: HttpClient) {}
+
+  adicionar(pessoa: Pessoa): Promise<Pessoa> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.post<Pessoa>(`${ALGAMONEY_API}/pessoas`, pessoa, options).toPromise();
+  }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
