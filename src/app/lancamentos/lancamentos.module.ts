@@ -37,10 +37,6 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
   declarations: [
     LancamentoCadastroComponent,
     LancamentosPesquisaComponent
-  ],
-  exports: [
-    LancamentoCadastroComponent,
-    LancamentosPesquisaComponent,
   ]
 })
 export class LancamentosModule {}

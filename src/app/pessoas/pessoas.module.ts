@@ -28,10 +28,6 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
   declarations: [
     PessoaCadastroComponent,
     PessoasPesquisaComponent
-  ],
-  exports: [
-    PessoaCadastroComponent,
-    PessoasPesquisaComponent
   ]
 })
 export class PessoasModule {}
