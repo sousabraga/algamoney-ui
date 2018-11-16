@@ -21,8 +21,10 @@ import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadast
 registerLocaleData(localePt, 'pt');
 
 const appRoutes: Routes = [
+  {path: '', redirectTo: 'lancamentos', pathMatch: 'full'},
   {path: 'lancamentos', component: LancamentosPesquisaComponent},
   {path: 'lancamentos/novo', component: LancamentoCadastroComponent},
+  {path: 'lancamentos/:id', component: LancamentoCadastroComponent},
   {path: 'pessoas', component: PessoasPesquisaComponent},
   {path: 'pessoas/nova', component: PessoaCadastroComponent}
 ];

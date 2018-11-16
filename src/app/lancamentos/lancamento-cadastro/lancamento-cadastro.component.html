@@ -3,7 +3,7 @@
   <form #formLancamento="ngForm" (ngSubmit)="salvar(formLancamento)">
     <div class="ui-g">
       <div class="ui-g-12">
-        <h1>Novo Lançamento</h1>
+        <h1>{{lancamento.id? 'Editar' : 'Novo'}} Lançamento</h1>
       </div>
 
       <div class="ui-g-12">
@@ -83,8 +83,6 @@
 
       <div class="ui-g-12">
         <button pButton type="submit" label="Salvar" [disabled]="formLancamento.invalid"></button>
-        &nbsp;
-        <button pButton type="button" label="Novo" class="ui-button-info"></button>
         &nbsp;
         <a routerLink="/lancamentos">Voltar para a pesquisa</a>
       </div>

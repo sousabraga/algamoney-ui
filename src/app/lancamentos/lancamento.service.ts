@@ -24,6 +24,17 @@ export class LancamentoService {
     return this.http.post<Lancamento>(`${ALGAMONEY_API}/lancamentos`, lancamento, options).toPromise();
   }
 
+  atualizar(lancamento: Lancamento): Promise<Lancamento> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.put<Lancamento>(`${ALGAMONEY_API}/lancamentos/${lancamento.id}`, lancamento, options).toPromise();
+  }
+
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
 
@@ -38,6 +49,17 @@ export class LancamentoService {
     return this.http.get(`${ALGAMONEY_API}/lancamentos?resumo`, options).toPromise();
   }
 
+  buscarPorId(id: number): Promise<Lancamento>  {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.get<Lancamento>(`${ALGAMONEY_API}/lancamentos/${id}`, options).toPromise();
+  }
+
   excluir(id: number): Promise<any> {
     const options = {
       headers: new HttpHeaders({
@@ -47,6 +69,18 @@ export class LancamentoService {
     };
 
     return this.http.delete(`${ALGAMONEY_API}/lancamentos/${id}`, options).toPromise();
+  }
+
+  convertStringToDate(lancamentos: Lancamento[]) {
+    lancamentos.map(l => {
+      if (l.dataVencimento) {
+        l.dataVencimento = moment(l.dataVencimento).toDate();
+      }
+
+      if (l.dataPagamento) {
+        l.dataPagamento = moment(l.dataPagamento).toDate();
+      }
+    });
   }
 
   private popularFiltro(filtro: LancamentoFiltro): HttpParams {

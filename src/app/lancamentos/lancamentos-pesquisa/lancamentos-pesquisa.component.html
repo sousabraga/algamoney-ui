@@ -62,7 +62,10 @@
             </td>
             <td>{{lancamento.pessoa}}</td>
             <td class="col-acoes">
-              <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></button>
+              <a pButton [routerLink]="['/lancamentos', lancamento.id]"
+                icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
+                class="ui-button-link">
+              </a>
               &nbsp;
               <button pButton type="button" icon="pi pi-trash"
                 pTooltip="Excluir" tooltipPosition="top"
