@@ -22,6 +22,28 @@ export class PessoaService {
     return this.http.post<Pessoa>(`${ALGAMONEY_API}/pessoas`, pessoa, options).toPromise();
   }
 
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.put<Pessoa>(`${ALGAMONEY_API}/pessoas/${pessoa.id}`, pessoa, options).toPromise();
+  }
+
+  buscarPorId(id: number) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      })
+    };
+
+    return this.http.get<Pessoa>(`${ALGAMONEY_API}/pessoas/${id}`, options).toPromise();
+  }
+
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
 
