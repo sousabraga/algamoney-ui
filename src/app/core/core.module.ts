@@ -14,3 +14,5 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
   exports: [NavbarComponent]
 })
 export class CoreModule {}
+
+

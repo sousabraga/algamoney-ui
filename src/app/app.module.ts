@@ -13,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { AppComponent } from './app.component';
+import { SegurancaModule } from './seguranca/seguranca.module';
 
 registerLocaleData(localePt, 'pt');
 
@@ -28,7 +29,8 @@ registerLocaleData(localePt, 'pt');
     AppRoutingModule,
     CoreModule,
     LancamentosModule,
-    PessoasModule
+    PessoasModule,
+    SegurancaModule
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt'}, MessageService],
   bootstrap: [AppComponent],

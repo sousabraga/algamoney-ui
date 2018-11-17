@@ -10,10 +10,11 @@ export class ErrorHandlerService {
   constructor(private messageService: MessageService) {}
 
   handle(errorResponse: any) {
-    console.log('CAIU AQUI');
     let mensagem: string;
 
-    if (errorResponse.error[0]) {
+    if (typeof errorResponse === 'string') {
+      mensagem = errorResponse;
+    } else if (errorResponse.error[0]) {
       mensagem = errorResponse.error[0].mensagemUsuario;
     } else {
       mensagem = 'Erro ao processar. Tente novamente.';

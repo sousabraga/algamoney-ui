@@ -6,6 +6,7 @@ import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadast
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
+import { LoginComponent } from './seguranca/login/login.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'lancamentos', pathMatch: 'full'},
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
   {path: 'pessoas', component: PessoasPesquisaComponent},
   {path: 'pessoas/nova', component: PessoaCadastroComponent},
   {path: 'pessoas/:id', component: PessoaCadastroComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent},
   {path: '**', redirectTo: 'pagina-nao-encontrada'}
 ];
