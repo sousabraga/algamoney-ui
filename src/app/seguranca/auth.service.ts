@@ -40,16 +40,16 @@ export class AuthService {
       });
   }
 
-  private armazenarToken(token: string) {
-    localStorage.setItem('token', token);
-    this.jwtPayload = this.jwtHelper.decodeToken(token);
+  private armazenarToken(accessToken: string) {
+    localStorage.setItem('access_token', accessToken);
+    this.jwtPayload = this.jwtHelper.decodeToken(accessToken);
   }
 
   private carregarToken() {
-    const token = localStorage.getItem('token');
+    const accessToken = localStorage.getItem('access_token');
 
-    if (token) {
-      this.armazenarToken(token);
+    if (accessToken) {
+      this.armazenarToken(accessToken);
     }
   }
 

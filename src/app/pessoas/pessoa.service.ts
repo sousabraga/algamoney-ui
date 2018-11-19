@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { ALGAMONEY_API, ACCESS_TOKEN } from './../app.api';
+import { ALGAMONEY_API } from './../app.api';
 import { Pessoa } from '../core/model/pessoa.model';
 
 @Injectable({
@@ -9,73 +9,44 @@ import { Pessoa } from '../core/model/pessoa.model';
 })
 export class PessoaService {
 
+  recurso = 'pessoas';
+
   constructor(private http: HttpClient) {}
 
   adicionar(pessoa: Pessoa): Promise<Pessoa> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.post<Pessoa>(`${ALGAMONEY_API}/pessoas`, pessoa, options).toPromise();
+    return this.http.post<Pessoa>(`${ALGAMONEY_API}/${this.recurso}`, pessoa).toPromise();
   }
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.put<Pessoa>(`${ALGAMONEY_API}/pessoas/${pessoa.id}`, pessoa, options).toPromise();
+    return this.http.put<Pessoa>(`${ALGAMONEY_API}/${this.recurso}/${pessoa.id}`, pessoa).toPromise();
   }
 
   buscarPorId(id: number) {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.get<Pessoa>(`${ALGAMONEY_API}/pessoas/${id}`, options).toPromise();
+    return this.http.get<Pessoa>(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
 
     const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      }),
       params: params
     };
 
-    return this.http.get(`${ALGAMONEY_API}/pessoas`, options).toPromise();
+    return this.http.get(`${ALGAMONEY_API}/${this.recurso}`, options).toPromise();
   }
 
   listarTodas(): Promise<any> {
-    const options = this.getHeaderOptions();
-
-    return this.http.get(`${ALGAMONEY_API}/pessoas`, options).toPromise();
+    return this.http.get(`${ALGAMONEY_API}/${this.recurso}`).toPromise();
   }
 
   excluir(id: number): Promise<any> {
-    const options = this.getHeaderOptions();
-
-    return this.http.delete(`${ALGAMONEY_API}/pessoas/${id}`, options).toPromise();
+    return this.http.delete(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   alterarStatusPessoa(pessoa: any): Promise<any> {
     pessoa.ativo = !pessoa.ativo;
 
-    const options = this.getHeaderOptions();
-
-    return this.http.put(`${ALGAMONEY_API}/pessoas/${pessoa.id}/ativo`, pessoa.ativo, options).toPromise();
+    return this.http.put(`${ALGAMONEY_API}/${this.recurso}/${pessoa.id}/ativo`, pessoa.ativo).toPromise();
   }
 
   private popularFiltro(filtro: PessoaFiltro): HttpParams {
@@ -88,18 +59,6 @@ export class PessoaService {
     }
 
     return params;
-  }
-
-  // Depois este método será removido quando for utilizar OAuth e JWT
-  private getHeaderOptions(): any {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return options;
   }
 
 }

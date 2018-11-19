@@ -1,74 +1,44 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import * as moment from 'moment';
 
 import { Lancamento } from './../core/model/lancamento.model';
-import { ALGAMONEY_API, ACCESS_TOKEN } from '../app.api';
+import { ALGAMONEY_API } from '../app.api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LancamentoService {
 
+  recurso = 'lancamentos';
+
   constructor(private http: HttpClient) {}
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.post<Lancamento>(`${ALGAMONEY_API}/lancamentos`, lancamento, options).toPromise();
+    return this.http.post<Lancamento>(`${ALGAMONEY_API}/${this.recurso}`, lancamento).toPromise();
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.put<Lancamento>(`${ALGAMONEY_API}/lancamentos/${lancamento.id}`, lancamento, options).toPromise();
+    return this.http.put<Lancamento>(`${ALGAMONEY_API}/${this.recurso}/${lancamento.id}`, lancamento).toPromise();
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = this.popularFiltro(filtro);
 
     const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      }),
       params: params
     };
 
-    return this.http.get(`${ALGAMONEY_API}/lancamentos?resumo`, options).toPromise();
+    return this.http.get(`${ALGAMONEY_API}/${this.recurso}?resumo`, options).toPromise();
   }
 
   buscarPorId(id: number): Promise<Lancamento>  {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.get<Lancamento>(`${ALGAMONEY_API}/lancamentos/${id}`, options).toPromise();
+    return this.http.get<Lancamento>(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   excluir(id: number): Promise<any> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${ACCESS_TOKEN}`
-      })
-    };
-
-    return this.http.delete(`${ALGAMONEY_API}/lancamentos/${id}`, options).toPromise();
+    return this.http.delete(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   convertStringToDate(lancamentos: Lancamento[]) {
