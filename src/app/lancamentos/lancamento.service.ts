@@ -3,8 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import * as moment from 'moment';
 
+import { environment } from './../../environments/environment';
 import { Lancamento } from './../core/model/lancamento.model';
-import { ALGAMONEY_API } from '../app.api';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +16,11 @@ export class LancamentoService {
   constructor(private http: HttpClient) {}
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.post<Lancamento>(`${ALGAMONEY_API}/${this.recurso}`, lancamento).toPromise();
+    return this.http.post<Lancamento>(`${environment.ALGAMONEY_API}/${this.recurso}`, lancamento).toPromise();
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.put<Lancamento>(`${ALGAMONEY_API}/${this.recurso}/${lancamento.id}`, lancamento).toPromise();
+    return this.http.put<Lancamento>(`${environment.ALGAMONEY_API}/${this.recurso}/${lancamento.id}`, lancamento).toPromise();
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
@@ -30,15 +30,15 @@ export class LancamentoService {
       params: params
     };
 
-    return this.http.get(`${ALGAMONEY_API}/${this.recurso}?resumo`, options).toPromise();
+    return this.http.get(`${environment.ALGAMONEY_API}/${this.recurso}?resumo`, options).toPromise();
   }
 
   buscarPorId(id: number): Promise<Lancamento>  {
-    return this.http.get<Lancamento>(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
+    return this.http.get<Lancamento>(`${environment.ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   excluir(id: number): Promise<any> {
-    return this.http.delete(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
+    return this.http.delete(`${environment.ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   convertStringToDate(lancamentos: Lancamento[]) {

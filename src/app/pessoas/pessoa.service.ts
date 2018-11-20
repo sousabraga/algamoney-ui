@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { ALGAMONEY_API } from './../app.api';
+import { environment } from './../../environments/environment';
 import { Pessoa } from '../core/model/pessoa.model';
 
 @Injectable({
@@ -14,15 +14,15 @@ export class PessoaService {
   constructor(private http: HttpClient) {}
 
   adicionar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.post<Pessoa>(`${ALGAMONEY_API}/${this.recurso}`, pessoa).toPromise();
+    return this.http.post<Pessoa>(`${environment.ALGAMONEY_API}/${this.recurso}`, pessoa).toPromise();
   }
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.put<Pessoa>(`${ALGAMONEY_API}/${this.recurso}/${pessoa.id}`, pessoa).toPromise();
+    return this.http.put<Pessoa>(`${environment.ALGAMONEY_API}/${this.recurso}/${pessoa.id}`, pessoa).toPromise();
   }
 
   buscarPorId(id: number) {
-    return this.http.get<Pessoa>(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
+    return this.http.get<Pessoa>(`${environment.ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
@@ -32,21 +32,21 @@ export class PessoaService {
       params: params
     };
 
-    return this.http.get(`${ALGAMONEY_API}/${this.recurso}`, options).toPromise();
+    return this.http.get(`${environment.ALGAMONEY_API}/${this.recurso}`, options).toPromise();
   }
 
   listarTodas(): Promise<any> {
-    return this.http.get(`${ALGAMONEY_API}/${this.recurso}`).toPromise();
+    return this.http.get(`${environment.ALGAMONEY_API}/${this.recurso}`).toPromise();
   }
 
   excluir(id: number): Promise<any> {
-    return this.http.delete(`${ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
+    return this.http.delete(`${environment.ALGAMONEY_API}/${this.recurso}/${id}`).toPromise();
   }
 
   alterarStatusPessoa(pessoa: any): Promise<any> {
     pessoa.ativo = !pessoa.ativo;
 
-    return this.http.put(`${ALGAMONEY_API}/${this.recurso}/${pessoa.id}/ativo`, pessoa.ativo).toPromise();
+    return this.http.put(`${environment.ALGAMONEY_API}/${this.recurso}/${pessoa.id}/ativo`, pessoa.ativo).toPromise();
   }
 
   private popularFiltro(filtro: PessoaFiltro): HttpParams {

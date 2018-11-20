@@ -9,6 +9,24 @@ import { AuthService } from './../../seguranca/auth.service';
 })
 export class NavbarComponent {
 
+  exibeMenu = false;
+
   constructor(private authService: AuthService) {}
+
+  getNomeUsuario(): string {
+    if (this.authService.jwtPayload) {
+      return this.authService.jwtPayload.nome;
+    }
+
+    return '';
+  }
+
+  possuiPermissao(permissao: string): boolean {
+    return this.authService.possuiPermissao(permissao);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 
 }

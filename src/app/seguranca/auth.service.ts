@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/components/common/api';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-import { ALGAMONEY_API } from './../app.api';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class AuthService {
     const options = this.getOptions();
     const body = `username=${email}&password=${senha}&grant_type=password`;
 
-    return this.http.post<any>(`${ALGAMONEY_API}/oauth/token`, body, options)
+    return this.http.post<any>(`${environment.ALGAMONEY_API}/oauth/token`, body, options)
       .toPromise()
       .then(response => {
         this.armazenarToken(response.access_token);
@@ -44,7 +44,7 @@ export class AuthService {
     const options = this.getOptions();
     const body = 'grant_type=refresh_token';
 
-    return this.http.post<any>(`${ALGAMONEY_API}/oauth/token`, body, options)
+    return this.http.post<any>(`${environment.ALGAMONEY_API}/oauth/token`, body, options)
       .toPromise()
       .then(response => {
         this.armazenarToken(response.access_token);
@@ -81,7 +81,7 @@ export class AuthService {
       withCredentials: true
     };
 
-    this.http.delete(`${ALGAMONEY_API}/tokens/revoke`, options)
+    this.http.delete(`${environment.ALGAMONEY_API}/tokens/revoke`, options)
       .subscribe(() => {
         localStorage.removeItem('access_token');
         this.jwtPayload = null;
