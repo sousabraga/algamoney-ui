@@ -7,15 +7,16 @@ import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pes
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LoginComponent } from './seguranca/login/login.component';
+import { AuthGuard } from './seguranca/auth.guard';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'lancamentos', pathMatch: 'full'},
-  {path: 'lancamentos', component: LancamentosPesquisaComponent},
-  {path: 'lancamentos/novo', component: LancamentoCadastroComponent},
-  {path: 'lancamentos/:id', component: LancamentoCadastroComponent},
-  {path: 'pessoas', component: PessoasPesquisaComponent},
-  {path: 'pessoas/nova', component: PessoaCadastroComponent},
-  {path: 'pessoas/:id', component: PessoaCadastroComponent},
+  {path: 'lancamentos', component: LancamentosPesquisaComponent, canActivate: [AuthGuard]},
+  {path: 'lancamentos/novo', component: LancamentoCadastroComponent, canActivate: [AuthGuard]},
+  {path: 'lancamentos/:id', component: LancamentoCadastroComponent, canActivate: [AuthGuard]},
+  {path: 'pessoas', component: PessoasPesquisaComponent, canActivate: [AuthGuard]},
+  {path: 'pessoas/nova', component: PessoaCadastroComponent, canActivate: [AuthGuard]},
+  {path: 'pessoas/:id', component: PessoaCadastroComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent},
   {path: '**', redirectTo: 'pagina-nao-encontrada'}

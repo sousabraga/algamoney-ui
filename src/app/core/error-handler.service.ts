@@ -14,7 +14,9 @@ export class ErrorHandlerService {
 
     if (typeof errorResponse === 'string') {
       mensagem = errorResponse;
-    } else if (errorResponse.error[0]) {
+    } else if (errorResponse.status === 403) {
+      mensagem = 'Você não tem permissão para executar esta atenção.';
+    } else if (errorResponse.error && errorResponse.error[0]) {
       mensagem = errorResponse.error[0].mensagemUsuario;
     } else {
       mensagem = 'Erro ao processar. Tente novamente.';

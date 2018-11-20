@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+import { MessageService } from 'primeng/components/common/api';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -13,7 +16,10 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   jwtPayload: any;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private messageService: MessageService) {
     this.carregarToken();
   }
 
@@ -48,6 +54,15 @@ export class AuthService {
       })
       .catch(error => {
         console.error('Erro ao renovar token', error);
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Acesso expirado',
+          detail: 'Efetue o login para obter acesso novamente'
+        });
+
+        this.router.navigate(['login']);
+
         return Promise.resolve(null);
       });
   }

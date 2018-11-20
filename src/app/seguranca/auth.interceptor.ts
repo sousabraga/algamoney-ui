@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(req);
     } else {
       if (this.authService.isAccessTokenInvalido()) {
-        const teste = this.authService.obterNovoAccessToken()
+        this.authService.obterNovoAccessToken()
           .then(() => {
             return next.handle(this.requestClone(req));
           });
