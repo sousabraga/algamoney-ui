@@ -50,7 +50,7 @@ export class AuthService {
         this.armazenarToken(response.access_token);
 
         console.log('Novo ACCESS TOKEN criado');
-        return Promise.resolve(null);
+        return Promise.resolve();
       })
       .catch(error => {
         console.error('Erro ao renovar token', error);
@@ -62,8 +62,7 @@ export class AuthService {
         });
 
         this.router.navigate(['login']);
-
-        return Promise.resolve(null);
+        return Promise.resolve();
       });
   }
 
@@ -75,6 +74,26 @@ export class AuthService {
 
   possuiPermissao(permissao: string): boolean {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+  }
+
+  logout() {
+    const options = {
+      withCredentials: true
+    };
+
+    this.http.delete(`${ALGAMONEY_API}/tokens/revoke`, options)
+      .subscribe(() => {
+        localStorage.removeItem('access_token');
+        this.jwtPayload = null;
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Logout concluído',
+          detail: 'Logout realizado com sucesso'
+        });
+
+        this.router.navigate(['login']);
+      });
   }
 
   private armazenarToken(accessToken: string) {

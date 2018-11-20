@@ -46,3 +46,7 @@
 .navbar-menuitem.ativo {
   background-color: #494541;
 }
+
+.link-logout {
+  cursor: pointer;
+}

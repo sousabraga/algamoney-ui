@@ -20,8 +20,8 @@
       *ngIf="authService.possuiPermissao('ROLE_PESQUISAR_PESSOA')">
       <a routerLink="/pessoas">Pessoas</a>
     </li>
-    <li routerLinkActive="ativo" class="navbar-menuitem">
-      <a href="#">Logout</a>
+    <li class="navbar-menuitem">
+      <a (click)="authService.logout()" class="link-logout">Logout</a>
     </li>
   </ul>
 
