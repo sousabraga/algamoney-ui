@@ -18,13 +18,7 @@ export class AuthService {
   }
 
   login(email: string, senha: string): Promise<any> {
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded',
-        'Authorization': `Basic YW5ndWxhcjpAbmd1bEByMA==`
-      })
-    };
-
+    const options = this.getOptions();
     const body = `username=${email}&password=${senha}&grant_type=password`;
 
     return this.http.post<any>(`${ALGAMONEY_API}/oauth/token`, body, options)
@@ -40,6 +34,34 @@ export class AuthService {
       });
   }
 
+  obterNovoAccessToken(): Promise<void> {
+    const options = this.getOptions();
+    const body = 'grant_type=refresh_token';
+
+    return this.http.post<any>(`${ALGAMONEY_API}/oauth/token`, body, options)
+      .toPromise()
+      .then(response => {
+        this.armazenarToken(response.access_token);
+
+        console.log('Novo ACCESS TOKEN criado');
+        return Promise.resolve(null);
+      })
+      .catch(error => {
+        console.error('Erro ao renovar token', error);
+        return Promise.resolve(null);
+      });
+  }
+
+  isAccessTokenInvalido(): boolean {
+    const accessToken = localStorage.getItem('access_token');
+
+    return !accessToken || this.jwtHelper.isTokenExpired(accessToken);
+  }
+
+  possuiPermissao(permissao: string): boolean {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+  }
+
   private armazenarToken(accessToken: string) {
     localStorage.setItem('access_token', accessToken);
     this.jwtPayload = this.jwtHelper.decodeToken(accessToken);
@@ -51,6 +73,18 @@ export class AuthService {
     if (accessToken) {
       this.armazenarToken(accessToken);
     }
+  }
+
+  private getOptions() {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded',
+        'Authorization': `Basic YW5ndWxhcjpAbmd1bEByMA==`
+      }),
+      withCredentials: true
+    };
+
+    return options;
   }
 
 }
